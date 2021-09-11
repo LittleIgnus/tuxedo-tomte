@@ -877,11 +877,11 @@ sub readOSData {
 			$distributionVersion = $1;
 		}
 		elsif ( $_ =~ /^ID_LIKE=/ ) {
-			$_ =~ /ID_LIKE=\"(.*)\"/;
+			$_ =~ /ID_LIKE=(.*)/;
 			$distributionIdLike = $1;
 		}
 		elsif ( $_ =~ /^VERSION_CODENAME=/ ) {
-			$_ =~ /VERSION_CODENAME=\"(.*)\"/;
+			$_ =~ /VERSION_CODENAME=(.*)/;
 			$distributionVersionCodename = $1;
 		}
 	}
@@ -896,7 +896,7 @@ sub readOSData {
 sub workaroundUbuntuForks {
 	if ( $distributionIdLike =~ /^ubuntu$/ ) {
 		if ( $distributionVersionCodename =~ /^(bionic|focal)$/ ) {
-			printLog("Workaround Ubuntu forks: Change $distribution to Ubuntu and use sources of $distributionVersionCodename", 'TL0');
+			printLog("Workaround Ubuntu forks: Change '$distribution' to 'Ubuntu' and use sources of '$distributionVersionCodename'", 'TL0');
 			$distribution = 'Ubuntu';
 			
 			if ( $distributionVersionCodename =~ /^bionic$/ ) {
