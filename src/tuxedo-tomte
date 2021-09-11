@@ -4102,6 +4102,11 @@ sub printLog {
 	if (!defined($type)) {
 		$type = 'l1';
 	}
+	else {
+		if ($type =~ /^[lt]+$/i) {
+			$type = "${type}1";
+		}
+	}
 	my $level = $type;
 	$level =~ s/\D//g;
 	if ($level <= $logLevel) {
