@@ -1637,6 +1637,25 @@ sub readOSData {
 }
 
 
+###############################################################################
+# correct $distribution and $distributionVersion if OS is an Ubuntu fork with
+# same sources
+
+sub workaroundUbuntuForks {
+	if ( $distributionIdLike =~ /^ubuntu$/ ) {
+		if ( $distributionVersionCodename =~ /^(bionic|focal)$/ ) {
+			printLog("Workaround Ubuntu forks: Change $distribution to Ubuntu and use sources of $distributionVersionCodename", 'TL0');
+			$distribution = 'Ubuntu';
+
+			if ( $distributionVersionCodename =~ /^bionic$/ ) {
+				$distributionVersion = '18.04';
+			}
+			elsif ( $distributionVersionCodename =~ /^focal$/ ) {
+				$distributionVersion = '20.04';
+			}
+		}
+	}
+}
 
 
 ###############################################################################
@@ -6580,6 +6599,8 @@ if (!tuxedoDevice()) {
 }
 
 readOSData();
+
+workaroundUbuntuForks();
 
 if (!isOSSupported()) {
 	exit (0);
